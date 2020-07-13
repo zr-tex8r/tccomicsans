@@ -1,0 +1,26 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A,T1]{fontenc}
+\usepackage[russian,main=english]{babel} %+ for Russian
+\babeltags{RUS=russian}                  %+ text!
+\usepackage[main]{tccomicsans}
+\begin{document}
+\section{Sample Text}
+\begin{quote}
+  ``Macros are pass\'e---it's \emph{so} mid-20th-century.''
+
+  ¿¡But aren’t Kafka’s \emph{Schloß} and Æsop’s Œuvres
+  often naïve vis-à-vis the dæmonic phœnix’s
+  \emph{official} rôle in fluffy soufflés!?
+
+  \begin{RUS}
+  В \emph{Советской-России}, документы верстают {\TeX}!
+  \end{RUS}
+\end{quote}
+
+\section{Sample Math Expression}
+\[
+  \left( \int_0^\infty \frac{\sin x}{\sqrt x}\,\mathrm{d}x \right)^2 =
+  \prod_{k=1}^\infty \frac{4k^2}{4k^2-1} \neq \frac{\pi}{2020}
+\]
+\end{document}
