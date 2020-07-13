@@ -1,0 +1,12 @@
+rcomic8r ComicSansMS "tccm-8r-enc ReEncodeFont" <[tccm-8r.enc <comic.ttf
+rcomicbd8r ComicSansMS "tccm-8r-enc ReEncodeFont" <[tccm-8r.enc <comicbd.ttf
+rcomiccyr ComicSansMS "tccm-t2a-enc ReEncodeFont" <[tccm-t2a.enc <comic.ttf
+rcomiccyrbd ComicSansMS "tccm-t2a-enc ReEncodeFont" <[tccm-t2a.enc <comicbd.ttf
+rcomic7m ComicSansMS "tccm-texmital-enc ReEncodeFont" <[tccm-texmital.enc <comic.ttf
+rcomicbd7m ComicSansMS "tccm-texmital-enc ReEncodeFont" <[tccm-texmital.enc <comicbd.ttf
+rcomic7y ComicSansMS "tccm-texmsym-enc ReEncodeFont" <[tccm-texmsym.enc <comic.ttf
+rcomic9z ComicSansMS "tccm-csextras-enc ReEncodeFont" <[tccm-csextras.enc <comic.ttf
+rcomico8r ComicSansMS "tccm-8r-enc ReEncodeFont" <[tccm-8r.enc <comici.ttf
+rcomicbdo8r ComicSansMS "tccm-8r-enc ReEncodeFont" <[tccm-8r.enc <comicz.ttf
+rcomiccyro ComicSansMS "tccm-t2a-enc ReEncodeFont" <[tccm-t2a.enc <comici.ttf
+rcomiccyrbdo ComicSansMS "tccm-t2a-enc ReEncodeFont" <[tccm-t2a.enc <comicz.ttf

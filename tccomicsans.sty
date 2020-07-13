@@ -1,0 +1,133 @@
+%%
+%% This is file 'tccomicsans.sty'.
+%%
+%% Copyright (c) 2020 Takayuki YATO (aka. "ZR")
+%%   GitHub:   https://github.com/zr-tex8r
+%%   Twitter:  @zr_tex8r
+%%
+%% This package is distributed under the MIT License.
+%%
+
+%% package declaration
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tccomicsans}[2020/07/13 v0.2]
+\def\tccm@pkgname{tccomicsans}
+
+%--------------------------------------- general
+
+%% packages
+\RequirePackage{ifpdf}
+
+%% variables
+\newif\iftccm@ok
+
+%--------------------------------------- options
+
+%% variables
+\newif\iftccm@main
+\newif\iftccm@math
+\newif\iftccm@originalmap
+\let\tccm@driver\relax
+\let\tccm@comicsans@opts\@empty
+
+%% drivers
+\DeclareOption{dvipdfmx}{\let\tccm@driver=d}
+\DeclareOption{dvips}{\let\tccm@driver=0}
+\DeclareOption{nodvidriver}{\let\tccm@driver=0}
+%% '(no)main'
+\DeclareOption{nomain}{\tccm@mainfalse}
+\DeclareOption{main}{\tccm@maintrue}
+%% '(no)math'
+\DeclareOption{math}{\tccm@mathtrue}
+\DeclareOption{nomath}{\tccm@mathfalse}
+%% '(no)originalmap'
+\DeclareOption{nooriginalmap}{\tccm@originalmapfalse}
+\DeclareOption{originalmap}{\tccm@originalmaptrue}
+%% pass
+\DeclareOption{ulemph}{\tccm@next}
+\DeclareOption{boldemph}{\tccm@next}
+\DeclareOption{largesymbols}{\tccm@next}
+\DeclareOption{plusminus}{\tccm@next}
+\def\tccm@next{%
+  \edef\tccm@comicsans@opts{\tccm@comicsans@opts,\CurrentOption}}
+%% dispatch
+\ExecuteOptions{nomain,math,nooriginalmap}
+\ProcessOptions*
+
+%% resolve the driver
+\ifx\tccm@driver\relax % unknown
+  \ifpdf \let\tccm@driver=p
+  \else \let\tccm@driver=0
+  \fi
+\else\ifx 0\tccm@driver\else % not 'nodvidriver'
+  \ifpdf
+    \PackageError\tccm@pkgname
+     {Wrong driver option given}{\@ehc}
+  \fi
+\fi\fi
+
+%--------------------------------------- load map file
+
+\iftccm@originalmap
+  \def\tccm@tmpa{comicsans}
+\else
+  \def\tccm@tmpa{tccomicsans}
+\fi
+\ifx p\tccm@driver % pdf-mode
+  \pdfmapfile{=\tccm@tmpa.map}
+\else\ifx d\tccm@driver % dvipdfmx
+  \AtBeginDvi{\special{pdf:mapfile \tccm@tmpa.map}}
+\fi\fi
+
+%--------------------------------------- user interface
+
+%%<*> \comic
+\@ifdefinable{\comic}{%
+  \DeclareRobustCommand*{\comic}{%
+    \fontfamily{comic}\selectfont}
+}
+%%<*> \textcomic{<text>}
+\DeclareTextFontCommand{\textcomic}{\comic}
+
+%--------------------------------------- load comicsans package
+
+%% \tccm@preproc
+\@onlypreamble\tccm@preproc
+\let\tccm@preproc\@empty
+%% \tccm@postproc
+\@onlypreamble\tccm@postproc
+\let\tccm@postproc\@empty
+
+\iftccm@math\else
+  \g@addto@macro\tccm@preproc{%
+    \let\tccm@@neq\neq
+    \let\tccm@@pm\pm
+    \let\tccm@@frac\frac
+    \let\tccm@@DeclareSymbolFont\DeclareSymbolFont
+    \def\DeclareSymbolFont##1##2##3##4{}%
+  }
+  \g@addto@macro\tccm@postproc{%
+    \let\neq\tccm@@neq
+    \let\pm\tccm@@pm
+    \let\frac\tccm@@frac
+    \let\DeclareSymbolFont\tccm@@DeclareSymbolFont
+  }
+\fi
+
+\@ifpackageloaded{comicsans}{%
+  \PackageWarningNoLine
+   {Package comicsans is already loaded}
+}{%else
+  \iftccm@main
+    \tccm@preproc
+    \edef\tccm@next{%
+      \noexpand\RequirePackage[\tccm@comicsans@opts]{comicsans}%
+          [2013/12/19]% v1.0g
+    }\tccm@next
+    \tccm@postproc
+  \fi
+}
+
+%--------------------------------------- all done
+\endinput
+%% EOF
