@@ -73,6 +73,8 @@ The following options are passed to the comicsans package:
 Revision History
 ----------------
 
+  * Version 0.3  〈2020/08/12〉
+      - Add (tentative) support for LuaTeX and XeTeX.
   * Version 0.2  〈2020/07/13〉
       - The first public version.
 

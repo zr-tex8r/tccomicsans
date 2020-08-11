@@ -10,13 +10,13 @@
 
 %% package declaration
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{tccomicsans}[2020/07/13 v0.2]
+\ProvidesPackage{tccomicsans}[2020/08/12 v0.3]
 \def\tccm@pkgname{tccomicsans}
 
 %--------------------------------------- general
 
 %% packages
-\RequirePackage{ifpdf}
+\RequirePackage{ifpdf,ifxetex,ifluatex}
 
 %% variables
 \newif\iftccm@ok
@@ -57,13 +57,17 @@
 %% resolve the driver
 \ifx\tccm@driver\relax % unknown
   \ifpdf \let\tccm@driver=p
+  \else\ifxetex \let\tccm@driver=d
   \else \let\tccm@driver=0
-  \fi
+  \fi\fi
 \else\ifx 0\tccm@driver\else % not 'nodvidriver'
   \ifpdf
     \PackageError\tccm@pkgname
      {Wrong driver option given}{\@ehc}
   \fi
+\fi\fi
+\ifx p\tccm@driver\ifx\pdfextension\@undefined\else % new LuaTeX
+  \let\tccm@driver=l
 \fi\fi
 
 %--------------------------------------- load map file
@@ -73,11 +77,13 @@
 \else
   \def\tccm@tmpa{tccomicsans}
 \fi
-\ifx p\tccm@driver % pdf-mode
+\ifx l\tccm@driver % pdf-mode, LuaTeX
+  \pdfextension mapfile{=\tccm@tmpa.map}
+\else\ifx p\tccm@driver % pdf-mode
   \pdfmapfile{=\tccm@tmpa.map}
 \else\ifx d\tccm@driver % dvipdfmx
   \AtBeginDvi{\special{pdf:mapfile \tccm@tmpa.map}}
-\fi\fi
+\fi\fi\fi
 
 %--------------------------------------- user interface
 
